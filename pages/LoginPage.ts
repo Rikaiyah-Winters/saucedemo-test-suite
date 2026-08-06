@@ -11,30 +11,22 @@ export class LoginPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.usernameInput = page.getByTestId("username"); //not sure if .getByTestId works with data-test instead of data-testid
-        this.passwordInput = page.getByTestId("password");
-        this.loginButton = page.getByTestId("login-button");
-        this.errorMessageContainer = page.getByTestId("error");
-        this.errorXButton = page.getByTestId("error-button");
+        this.usernameInput = page.getByRole("textbox", { name: "Username" });
+        this.passwordInput = page.getByRole("textbox", { name: "Password" });
+        this.loginButton = page.getByRole("button", { name: "Login" });
+        this.errorMessageContainer = page.locator('[data-test="error"]');
+        this.errorXButton = page.locator('[data-test="error-button"]');
     };
 
     async goto() {
-        await this.page.goto("saucedemo.com");
+        await this.page.goto("https://saucedemo.com");
     }
 
     //standard user
-    async standardUserLogin(username = "standard_user", password = "secret_sauce") {//not sure if that's best practice
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
+    async standardUserLogin() {//not sure if that's best practice
+        await this.usernameInput.fill("standard_user");
+        await this.passwordInput.fill("secret_sauce");
         await this.loginButton.click();
-
-        await expect(this.page.url()).toContain("inventory.html")
+        expect(this.page.url()).toContain("inventory.html");
     };
-    
-    //locked_out_user
-    //problem_user
-    //performance_glitch_user
-    //error_user
-    //visual_user
-
 }
