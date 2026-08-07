@@ -12,5 +12,9 @@ test.describe("Suite", () => {
         await loginPage.standardUserLogin();
     });
     
+    test("002: Invalid user and/or password recieves error", async ({page}) => {
+        //wrong user, right password
+        await loginPage.invalidUsernameLogin();
+    })
     //Invalid user and/or password recieves error
 })

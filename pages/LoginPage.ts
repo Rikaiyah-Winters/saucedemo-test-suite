@@ -29,4 +29,11 @@ export class LoginPage {
         await this.loginButton.click();
         expect(this.page.url()).toContain("inventory.html");
     };
+
+    async invalidUsernameLogin() {
+        await this.usernameInput.fill("wrong user");
+        await this.passwordInput.fill("secret_sauce");
+        await this.loginButton.click();
+        await expect(this.errorMessageContainer).toBeVisible();
+    }
 }
