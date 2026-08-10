@@ -16,5 +16,6 @@ test.describe("Suite", () => {
         //wrong user, right password
         await loginPage.invalidUsernameLogin();
     })
-    //Invalid user and/or password recieves error
+    
+    test("003: Locked out user", async ({page}) => {});
 })
