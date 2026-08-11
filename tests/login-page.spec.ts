@@ -18,4 +18,6 @@ test.describe("Suite", () => {
     })
     
     test("003: Locked out user", async ({page}) => {});
+
+    test("004: Performance Glitch User", async ({page}) => {});
 })
