@@ -22,4 +22,6 @@ test.describe("Suite", () => {
     test("004: Performance Glitch User", async ({page}) => {});
 
     test("005: Error User", async ({page}) => {});
+
+    test("006: Visual User", async ({page}) => {})
 })
