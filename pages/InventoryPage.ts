@@ -18,5 +18,12 @@ export class InventoryPage {
 
     constructor(page:Page){
         this.page = page;
+        this.hamburgerMenu = page.getByRole("button", {name: "OpenMenu"});
+        this.shoppingCartIconLink = page.locator('[data-test="shopping-cart-link"]'); //⚠️
+        this.shoppingCartIconNumber = page.locator('[data-test="shopping-cart-badge"]'); //⚠️
+        this.filter = page.getByText("Name (A to Z)"); //see if that works
+        this.itemName = 
+        this.addToCartButton = page.getByRole("button", {name: "Add to cart"});
+        this.itemPhotoLink = page.getByRole("img", {description: "Sauce Labs Backpack"}); //placeholder
     }
 }
