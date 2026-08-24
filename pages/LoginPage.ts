@@ -14,8 +14,8 @@ export class LoginPage {
         this.usernameInput = page.getByRole("textbox", { name: "Username" });
         this.passwordInput = page.getByRole("textbox", { name: "Password" });
         this.loginButton = page.getByRole("button", { name: "Login" });
-        this.errorMessageContainer = page.locator('[data-test="error"]');
-        this.errorXButton = page.locator('[data-test="error-button"]');
+        this.errorMessageContainer = page.locator('[data-test="error"]'); //⚠️
+        this.errorXButton = page.locator('[data-test="error-button"]'); //⚠️
     };
 
     async goto() {
@@ -23,7 +23,7 @@ export class LoginPage {
     }
 
     //standard user
-    async standardUserLogin() {//not sure if that's best practice
+    async standardUserLogin() {
         await this.usernameInput.fill("standard_user");
         await this.passwordInput.fill("secret_sauce");
         await this.loginButton.click();
@@ -35,5 +35,22 @@ export class LoginPage {
         await this.passwordInput.fill("secret_sauce");
         await this.loginButton.click();
         await expect(this.errorMessageContainer).toBeVisible();
+        await expect(this.errorMessageContainer).toHaveText("Epic sadface: Username and password do not match any user in this service")
     }
+
+    //locked out user
+    async lockedOutUserLogin() {
+        await this.usernameInput.fill("locked_out_user");
+        await this.passwordInput.fill("secret_sauce");
+        await this.loginButton.click()
+        await expect(this.errorMessageContainer).toBeVisible();
+        await expect(this.errorMessageContainer).toHaveText("Epic sadface: Sorry, this user has been locked out.")
+    }
+
+    /*Saving for later
+    async problemUserLogin() {};
+    async performanceGlitchUserLogin() {};
+    async errorUserLogin() {};
+    async visual user() {};
+    */
 }

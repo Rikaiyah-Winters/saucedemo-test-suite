@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test.describe("Suite", () => {
+test.describe("Login Page Test Suite", () => {
     let loginPage: LoginPage;
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
@@ -13,15 +13,12 @@ test.describe("Suite", () => {
     });
     
     test("002: Invalid user and/or password recieves error", async ({page}) => {
-        //wrong user, right password
+        //wrong user and/or password; not for any established login credentials; should make more flexible to enter custom user and pass
         await loginPage.invalidUsernameLogin();
     })
     
-    test("003: Locked out user", async ({page}) => {});
+    test("003: Locked out user", async ({page}) => {
+        await loginPage.lockedOutUserLogin()
+    });
 
-    test("004: Performance Glitch User", async ({page}) => {});
-
-    test("005: Error User", async ({page}) => {});
-
-    test("006: Visual User", async ({page}) => {})
 })
