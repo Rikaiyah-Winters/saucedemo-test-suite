@@ -6,24 +6,20 @@ export class InventoryPage {
     readonly shoppingCartIconLink: Locator;
     readonly shoppingCartIconNumber: Locator;
     readonly filter: Locator;
-    //add types of filters
-    //item name locator
-    readonly itemName: Locator;
-    //locator "Add to Cart" button
     readonly addToCartButton: Locator;
-    //item photo locator
-    readonly itemPhotoLink: Locator;
+    //readonly itemName: Locator;
+    //readonly itemPhotoLink: Locator;
 
 
 
-    constructor(page:Page){
+    constructor(page: Page) {
         this.page = page;
-        this.hamburgerMenu = page.getByRole("button", {name: "OpenMenu"});
-        this.shoppingCartIconLink = page.locator('[data-test="shopping-cart-link"]'); //⚠️
-        this.shoppingCartIconNumber = page.locator('[data-test="shopping-cart-badge"]'); //⚠️
-        this.filter = page.getByText("Name (A to Z)"); //see if that works
-        this.itemName = 
-        this.addToCartButton = page.getByRole("button", {name: "Add to cart"});
-        this.itemPhotoLink = page.getByRole("img", {description: "Sauce Labs Backpack"}); //placeholder
+        this.hamburgerMenu = page.getByRole("button", { name: "OpenMenu" });
+        this.shoppingCartIconLink = page.getByTestId('shopping-cart-link');
+        this.shoppingCartIconNumber = page.getByTestId('shopping-cart-badge');
+        this.filter = page.getByRole("listbox", { name: "Name (A to Z)" });
+        this.addToCartButton = page.getByRole("button", { name: "Add to cart" });
+        //this.itemName
+        //this.itemPhotoLink
     }
 }
