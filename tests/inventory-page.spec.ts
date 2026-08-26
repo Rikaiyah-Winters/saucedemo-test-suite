@@ -22,4 +22,10 @@ test.describe("Inventory Page Test Suite", () => {
         const inventoryItems = await page.getByTestId("inventory-item");
         await expect(inventoryItems).toHaveCount(6)
     });
+
+    //cart icon leads to checkout page
+    //hamburger menu icon leads to proper menu
+    //each item NAME and PHOTO leads to item details page
+    //add to cart button increases cart bage and adds item to checkout page
+
 })
