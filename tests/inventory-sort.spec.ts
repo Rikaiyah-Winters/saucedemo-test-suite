@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
+import { users } from "../data/users";
 
 test.describe("Inventory Page Test Suite", () => {
     let loginPage: LoginPage;
@@ -10,16 +11,16 @@ test.describe("Inventory Page Test Suite", () => {
         loginPage = new LoginPage(page);
         inventoryPage = new InventoryPage(page);
         await loginPage.goto();
-        await loginPage.standardUserLogin();
+        await loginPage.login(users.standard.username, users.standard.password);
     });
 
     test("Url has '/inventory' in it", async ({ page }) => {
-        await expect(page.url()).toContain("/inventory.html")
+        await expect(page).toHaveURL(/inventory.html/)
     })
 
     //has 6 items in enventory
     test("Inventory has 6 items", async ({page}) => {
-        const inventoryItems = await page.getByTestId("inventory-item");
+        const inventoryItems = page.getByTestId("inventory-item");
         await expect(inventoryItems).toHaveCount(6)
     });
 
