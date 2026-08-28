@@ -18,7 +18,6 @@ test.describe("Inventory Page Test Suite", () => {
         await expect(page).toHaveURL(/inventory.html/)
     })
 
-    //has 6 items in enventory
     test("Inventory has 6 items", async ({page}) => {
         const inventoryItems = page.getByTestId("inventory-item");
         await expect(inventoryItems).toHaveCount(6)
