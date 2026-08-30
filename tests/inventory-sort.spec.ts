@@ -2,14 +2,17 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
 import { users } from "../data/users";
+import { CheckOutStepOnePage } from "../pages/CheckOutStepOnePage";
 
 test.describe("Inventory Page Test Suite", () => {
     let loginPage: LoginPage;
     let inventoryPage: InventoryPage;
+    let checkoutStepOnePage: CheckOutStepOnePage;
 
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         inventoryPage = new InventoryPage(page);
+        checkoutStepOnePage = new CheckOutStepOnePage(page);
         await loginPage.goto();
         await loginPage.login(users.standard.username, users.standard.password);
     });
@@ -24,6 +27,13 @@ test.describe("Inventory Page Test Suite", () => {
     });
 
     //cart icon leads to checkout page
+    test("Cart Icon leads to checkout page", async ({page}) => {
+        await inventoryPage.shoppingCartIconLink.click()
+        expect (checkoutStepOnePage.checkoutPageTitle).toHaveText("Your Cart");
+        //expect (checkoutStepOnePage.getCartItemCard("Sauce Labs Onesie")).toBeVisible();
+        expect (checkoutStepOnePage.checkoutButton).toBeVisible();
+        expect (checkoutStepOnePage.continueShoppingButton).toBeVisible(); //see how these 3 can be morphed into one
+    })
     //hamburger menu icon leads to proper menu
     //each item NAME and PHOTO leads to item details page
     //add to cart button increases cart bage and adds item to checkout page
