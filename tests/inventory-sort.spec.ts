@@ -34,7 +34,9 @@ test.describe("Inventory Page Test Suite", () => {
         expect (checkoutStepOnePage.checkoutButton).toBeVisible();
         expect (checkoutStepOnePage.continueShoppingButton).toBeVisible(); //see how these 3 can be morphed into one
     })
+
     //hamburger menu icon leads to proper menu
+    test("Hamburger icon leads to proper, working menu", async ({page}) => {})
     //each item NAME and PHOTO leads to item details page
     //add to cart button increases cart bage and adds item to checkout page
 
