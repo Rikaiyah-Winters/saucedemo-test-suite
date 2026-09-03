@@ -39,7 +39,9 @@ test.describe("Inventory Page Test Suite", () => {
     test("Hamburger icon leads to proper, working menu", async ({page}) => {});
 
     //each item NAME and PHOTO leads to item details page
-    test("Item name/header and photo leads to item details page", async ({page}) => {});
+    test("Item name/header leads to item details page", async ({page}) => {});
+
+    test("Item photo leads to item details page", async ({page}) => {});
     
     //add to cart button increases cart bage 
     test("Adding an item to cart increases cart badge number", async ({page}) => {});
