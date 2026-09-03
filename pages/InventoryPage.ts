@@ -7,8 +7,6 @@ export class InventoryPage {
     readonly shoppingCartIconNumber: Locator;
     readonly filter: Locator;
 
-
-
     constructor(page: Page) {
         this.page = page;
         this.hamburgerMenu = page.getByRole("button", { name: "Open Menu" });
