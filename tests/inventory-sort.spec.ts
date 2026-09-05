@@ -38,8 +38,10 @@ test.describe("Inventory Page Test Suite", () => {
     });
 
     test("Item name/header leads to item details page", async ({ page, inventoryPage }) => {
-        await page.getByRole("link", { name: inventoryItems.backpack.name }).click();
+        //backpack's specific title link testid, see if i could do something more user friendly
+        await page.getByTestId("item-4-title-link").click();
         //correct url
+        await expect(page).toHaveURL(/id=4/);
         //proper name
         //save checking for proper name, description, price, "Add to Cart" button, and "Back to products" button
     });
