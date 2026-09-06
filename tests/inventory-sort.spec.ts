@@ -43,6 +43,7 @@ test.describe("Inventory Page Test Suite", () => {
         //correct url
         await expect(page).toHaveURL(/id=4/);
         //proper name
+        await expect(page.getByText("Sauce Labs Backpack")).toBeVisible(); //perhaps add inventoryItemPage for this one?
         //save checking for proper name, description, price, "Add to Cart" button, and "Back to products" button
     });
 
