@@ -4,10 +4,9 @@ import { inventoryItems } from "../data/inventory-items";
 
 test.describe("Inventory Page Test Suite", () => {
     test.beforeEach(async ({ loginPage }) => {
-        //perhaps consider grouping some of these tests under a "before all"
+        //perhaps consider grouping some of these tests (that don't require interactions) under a "before all" hook?
         await loginPage.goto();
         await loginPage.login(users.standard.username, users.standard.password);
-        //popup isautomatically dismissed
     });
 
     test("Url has '/inventory' in it", async ({ page }) => {
@@ -19,12 +18,11 @@ test.describe("Inventory Page Test Suite", () => {
         await expect(inventoryItems).toHaveCount(6)
     });
 
-    test("Cart Icon leads to checkout page", async ({ inventoryPage, checkoutStepOnePage }) => {
+    test("Cart Icon leads to (empty) checkout page", async ({ inventoryPage, checkoutStepOnePage }) => {
         await inventoryPage.shoppingCartIconLink.click()
-        expect(checkoutStepOnePage.checkoutPageTitle).toHaveText("Your Cart");
-        //expect (checkoutStepOnePage.getCartItemCard("Sauce Labs Onesie")).toBeVisible();
-        expect(checkoutStepOnePage.checkoutButton).toBeVisible();
-        expect(checkoutStepOnePage.continueShoppingButton).toBeVisible(); //see how these 3 can be morphed into one
+        await expect(checkoutStepOnePage.checkoutPageTitle).toHaveText("Your Cart");
+        await expect(checkoutStepOnePage.checkoutButton).toBeVisible();
+        await expect(checkoutStepOnePage.continueShoppingButton).toBeVisible(); //see how these 3 can be morphed into one
     });
 
     test("Hamburger icon leads to proper, working menu", async ({ inventoryPage }) => {
@@ -33,25 +31,29 @@ test.describe("Inventory Page Test Suite", () => {
         //"About" leads you to a different page, saucelabs.com
         //"Logout" logs you out
         //perhaps these should all be seperate tests?
-
         //🚨🐞Found a bug! The "Reset App State" doesn't reset the "Add to Cart buttons". Just the cart badge
     });
 
-    test("Item name/header leads to item details page", async ({ page, inventoryPage }) => {
-        //backpack's specific title link testid, see if i could do something more user friendly
-        await page.getByTestId("item-4-title-link").click();
-        //correct url
-        await expect(page).toHaveURL(/id=4/);
-        //proper name
-        await expect(page.getByText("Sauce Labs Backpack")).toBeVisible(); //perhaps add inventoryItemPage for this one?
-        //save checking for proper name, description, price, "Add to Cart" button, and "Back to products" button
+    test("Item name/header leads to item details page - Backpack", async ({ page }) => {
+        await page.getByTestId(`item-${inventoryItems.backpack.itemId}-title-link`).click();
+        await expect(page).toHaveURL(new RegExp(`id=${inventoryItems.backpack.itemId}`));
+        await expect(page.getByText(inventoryItems.backpack.name)).toBeVisible(); //perhaps add inventoryItemPage for this one?
+        //save checking for proper name, description, price, "Add to Cart" button, and "Back to products" button for item description page
     });
 
     test("Item photo leads to item details page", async ({ page }) => {
-        await page.getByRole("img", {name: "Sauce Labs Backpack"}).click();
-        await expect(page).toHaveURL(/id=4/);
+        await page.getByRole("img", { name: "Sauce Labs Backpack" }).click();
+        await expect(page).toHaveURL(new RegExp(`id=${inventoryItems.backpack.itemId}`));
         await expect(page.getByText("Sauce Labs Backpack")).toBeVisible();
-     });
+    });
 
-    test("Adding an item to cart increases cart badge number", async ({ page }) => { });
+    test("Adding an item to cart increases cart badge number", async ({ page, inventoryPage }) => {
+        await expect(inventoryPage.shoppingCartBadgeNumber).not.toBeVisible();
+        await inventoryPage.addItemToCart(inventoryItems.redShirt.name);
+        await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("1");
+        await inventoryPage.addItemToCart(inventoryItems.backpack.name);
+        await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("2");
+    });
+
+    //SORT TESTS!!!
 });

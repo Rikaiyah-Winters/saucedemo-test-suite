@@ -1,25 +1,24 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator} from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class InventoryPage {
+
+export class InventoryPage extends BasePage{
     readonly page: Page;
     readonly hamburgerMenu: Locator;
     readonly shoppingCartIconLink: Locator;
-    readonly shoppingCartIconNumber: Locator;
-    readonly filter: Locator;
+    readonly shoppingCartBadgeNumber: Locator;
+    readonly sort: Locator;
 
     constructor(page: Page) {
+        super(page);
         this.page = page;
         this.hamburgerMenu = page.getByRole("button", { name: "Open Menu" });
         this.shoppingCartIconLink = page.getByTestId('shopping-cart-link');
-        this.shoppingCartIconNumber = page.getByTestId('shopping-cart-badge');
-        this.filter = page.getByRole("combobox"); //🚨how is it combo box because of select? Difference between combobox and listbox??
-    }
-
-    getItemCard(itemName: string): Locator {
-        return this.page.getByTestId("inventory-item").filter({hasText: itemName});
+        this.shoppingCartBadgeNumber = page.getByTestId('shopping-cart-badge');
+        this.sort = page.getByRole("combobox");
     }
 
     async addItemToCart(itemName: string) {
-        await this.getItemCard(itemName).getByRole("button", {name: "Add to cart"});
+        this.getItemCard(itemName).getByRole("button", {name: "Add to cart"}).click();
     }
 }
