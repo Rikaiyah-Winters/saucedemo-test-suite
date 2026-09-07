@@ -47,7 +47,11 @@ test.describe("Inventory Page Test Suite", () => {
         //save checking for proper name, description, price, "Add to Cart" button, and "Back to products" button
     });
 
-    test("Item photo leads to item details page", async ({ page }) => { });
+    test("Item photo leads to item details page", async ({ page }) => {
+        await page.getByRole("img", {name: "Sauce Labs Backpack"}).click();
+        await expect(page).toHaveURL(/id=4/);
+        await expect(page.getByText("Sauce Labs Backpack")).toBeVisible();
+     });
 
     test("Adding an item to cart increases cart badge number", async ({ page }) => { });
 });
