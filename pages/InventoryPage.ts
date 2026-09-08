@@ -1,8 +1,8 @@
-import { Page, Locator} from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 
-export class InventoryPage extends BasePage{
+export class InventoryPage extends BasePage {
     readonly page: Page;
     readonly hamburgerMenu: Locator;
     readonly shoppingCartIconLink: Locator;
@@ -19,6 +19,11 @@ export class InventoryPage extends BasePage{
     }
 
     async addItemToCart(itemName: string) {
-        this.getItemCard(itemName).getByRole("button", {name: "Add to cart"}).click();
+        this.getItemCard(itemName).getByRole("button", { name: "Add to cart" }).click();
+    }
+
+    async navigateHamburgerMenu(menuItem: string) {
+        await this.hamburgerMenu.click();
+        await this.page.getByTestId(`${menuItem}-sidebar-link`).click();
     }
 }
