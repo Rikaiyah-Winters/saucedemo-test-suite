@@ -1,6 +1,7 @@
 import { test, expect } from "../fixtures/pom-fixtures";
 import { users } from "../data/users";
 import { inventoryItems } from "../data/inventory-items";
+import { InventoryPage } from "../pages/InventoryPage";
 
 //perhaps group tests for: hamburger, cart, item details page, sorting
 
@@ -48,24 +49,24 @@ test.describe("Inventory Page Test Suite", () => {
         await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("2");
     });
 
-    test("Hamburger Menu: 'All Items' should direct to inventory page", async ({page, inventoryPage}) => {
+    test("Hamburger Menu: 'All Items' should direct to inventory page", async ({ page, inventoryPage }) => {
         await page.getByTestId(`item-${inventoryItems.backpack.itemId}-title-link`).click();
         await inventoryPage.navigateHamburgerMenu("inventory");
         await expect(page).toHaveURL(/inventory\.html/);
         //perhaps assert that it doesn't do anything when its already on the inventory page?
     });
 
-    test("Hamburger Menu: 'About' should lead to saucelabs.com", async ({page, inventoryPage}) => {
+    test("Hamburger Menu: 'About' should lead to saucelabs.com", async ({ page, inventoryPage }) => {
         await inventoryPage.navigateHamburgerMenu("about");
         await expect(page).toHaveURL(/saucelabs\.com/);
     });
 
-    test("Hamburger Menu: 'Logout' should lead back to the login page", async ({page, inventoryPage}) => {
+    test("Hamburger Menu: 'Logout' should lead back to the login page", async ({ page, inventoryPage }) => {
         await inventoryPage.navigateHamburgerMenu(("logout"));
         await expect(page).toHaveURL("https://www.saucedemo.com");
     });
 
-    test("Hamburger Menu: 'Reset App State'", async ({page, inventoryPage}) => {
+    test("Hamburger Menu: 'Reset App State'", async ({ page, inventoryPage }) => {
         await inventoryPage.addItemToCart(inventoryItems.redShirt.name);
         await inventoryPage.addItemToCart(inventoryItems.bikeLight.name);
         await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("2");
@@ -74,5 +75,30 @@ test.describe("Inventory Page Test Suite", () => {
         //keep in mind this link has a bug that only clears the cart badge; only after you refresh the page does the app reset
     });
 
-    //SORT TESTS!!!
+    //sort tests
+    //name a to z: good time to do a regexp?? to organize the names in alphabetical order. 
+    //Focus on the inventory-item-name text, put into an array and check to see if they're in alphabetical order??
+    test("sort a to z", async ({ inventoryPage }) => {
+        //sorts items on BROWSER PAGE
+        await inventoryPage.sortBy("az"); //why do i have to do await twice?
+        //really good lesson in algorithms
+
+        //Gets an array of the item names as they are on the page
+        const actual = await inventoryPage.sortedItemNames();
+
+        //further sorting the actual array into alphabetical order -- if its already then then nothing should change
+        const expected = [...actual].sort((a, b) => a.localeCompare(b)); //🚨need to thuroughly understand a,b
+        expect(actual).toEqual(expected);
+    });
+
+    test("sort z to a", async ({ inventoryPage }) => {
+        await inventoryPage.sortBy("za");
+        const actual = await inventoryPage.sortedItemNames()
+        const expected = [...actual].sort((a, b) => b.localeCompare(a));
+    })
+
+
+    //name z to a: 
+    //price low to high
+    //price high to low
 });

@@ -8,6 +8,8 @@ export class InventoryPage extends BasePage {
     readonly shoppingCartIconLink: Locator;
     readonly shoppingCartBadgeNumber: Locator;
     readonly sort: Locator;
+    readonly itemNames: Locator;
+    readonly itemPrices: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -15,7 +17,9 @@ export class InventoryPage extends BasePage {
         this.hamburgerMenu = page.getByRole("button", { name: "Open Menu" });
         this.shoppingCartIconLink = page.getByTestId('shopping-cart-link');
         this.shoppingCartBadgeNumber = page.getByTestId('shopping-cart-badge');
-        this.sort = page.getByRole("combobox");
+        this.sort = page.getByTestId('product-sort-container');
+        this.itemNames = page.getByTestId("inventory-item-name");
+        this.itemPrices = page.getByTestId("inventory-item-price");
     }
 
     async addItemToCart(itemName: string) {
@@ -25,5 +29,18 @@ export class InventoryPage extends BasePage {
     async navigateHamburgerMenu(menuItem: string) {
         await this.hamburgerMenu.click();
         await this.page.getByTestId(`${menuItem}-sidebar-link`).click();
+    }
+
+    async sortBy(option: string){
+        await this.sort.selectOption(option);
+    }
+
+    async sortedItemNames(): Promise<string[]> {
+        return this.itemNames.allTextContents()
+    };
+
+    async getItemPricesInOrder(): Promise<number[]> {
+        const prices = await this.itemPrices.allTextContents();
+        return prices.map((p) => parseFloat(p.replace("$", "")))
     }
 }
