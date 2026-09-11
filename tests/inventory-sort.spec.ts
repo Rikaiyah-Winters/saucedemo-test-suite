@@ -95,7 +95,9 @@ test.describe("Inventory Page Test Suite", () => {
         await inventoryPage.sortBy("za");
         const actual = await inventoryPage.sortedItemNames()
         const expected = [...actual].sort((a, b) => b.localeCompare(a));
-    })
+    });
+
+    test("sort price high to low", async ({inventoryPage) => {})
 
 
     //name z to a: 
