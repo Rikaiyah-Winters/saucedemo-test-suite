@@ -97,7 +97,9 @@ test.describe("Inventory Page Test Suite", () => {
         const expected = [...actual].sort((a, b) => b.localeCompare(a));
     });
 
-    test("sort price high to low", async ({inventoryPage) => {})
+    test("sort price high to low", async ({inventoryPage) => {});
+
+    test("sort price low to high", async ({inventoryPage}) => {});
 
 
     //name z to a: 
