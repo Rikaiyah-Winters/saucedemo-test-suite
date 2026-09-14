@@ -39,7 +39,7 @@ export class InventoryPage extends BasePage {
         return this.itemNames.allTextContents()
     };
 
-    async getItemPricesInOrder(): Promise<number[]> {
+    async sortedItemPrices(): Promise<number[]> {
         const prices = await this.itemPrices.allTextContents();
         return prices.map((p) => parseFloat(p.replace("$", "")))
     }

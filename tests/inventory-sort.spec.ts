@@ -95,11 +95,17 @@ test.describe("Inventory Page Test Suite", () => {
         await inventoryPage.sortBy("za");
         const actual = await inventoryPage.sortedItemNames()
         const expected = [...actual].sort((a, b) => b.localeCompare(a));
+        expect(actual).toEqual(expected);
     });
 
-    test("sort price high to low", async ({inventoryPage) => {});
+    test("sort price high to low", async ({ inventoryPage }) => {
+        await inventoryPage.sortBy("hilo");
+        const actual = await inventoryPage.sortedItemPrices();
+        const expected = [...actual].sort((a, b) => b - a);
+        expect(actual).toEqual(expected);
+    });
 
-    test("sort price low to high", async ({inventoryPage}) => {});
+    test("sort price low to high", async ({ inventoryPage }) => { });
 
 
     //name z to a: 
