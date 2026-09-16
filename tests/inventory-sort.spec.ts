@@ -105,7 +105,12 @@ test.describe("Inventory Page Test Suite", () => {
         expect(actual).toEqual(expected);
     });
 
-    test("sort price low to high", async ({ inventoryPage }) => { });
+    test("sort price low to high", async ({ inventoryPage }) => {
+        await inventoryPage.sortBy("lohi");
+        const actual = await inventoryPage.sortedItemPrices();
+        const expected = [...actual].sort((a, b) => a - b);
+        expect(actual).toEqual(expected);
+    });
 
 
     //name z to a: 
