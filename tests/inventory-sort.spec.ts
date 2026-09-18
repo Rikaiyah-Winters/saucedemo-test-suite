@@ -111,9 +111,4 @@ test.describe("Inventory Page Test Suite", () => {
         const expected = [...actual].sort((a, b) => a - b);
         expect(actual).toEqual(expected);
     });
-
-
-    //name z to a: 
-    //price low to high
-    //price high to low
 });
