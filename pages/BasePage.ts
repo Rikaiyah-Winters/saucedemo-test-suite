@@ -6,4 +6,8 @@ export class BasePage {
     getItemCard(itemName: string): Locator {
         return this.page.getByTestId("inventory-item").filter({ hasText: itemName });
     }
+
+    async addItemToCart(itemName: string) {
+        this.getItemCard(itemName).getByRole("button", { name: "Add to cart" }).click();
+    } //is used in both InventoryPage and ItemDetailsPage
 }

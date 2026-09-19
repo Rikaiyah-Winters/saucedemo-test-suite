@@ -22,16 +22,12 @@ export class InventoryPage extends BasePage {
         this.itemPrices = page.getByTestId("inventory-item-price");
     }
 
-    async addItemToCart(itemName: string) {
-        this.getItemCard(itemName).getByRole("button", { name: "Add to cart" }).click();
-    }
-
     async navigateHamburgerMenu(menuItem: string) {
         await this.hamburgerMenu.click();
         await this.page.getByTestId(`${menuItem}-sidebar-link`).click();
     }
 
-    async sortBy(option: string){
+    async sortBy(option: string) {
         await this.sort.selectOption(option);
     }
 
