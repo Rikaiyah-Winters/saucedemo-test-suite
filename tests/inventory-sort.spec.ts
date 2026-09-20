@@ -1,7 +1,6 @@
 import { test, expect } from "../fixtures/pom-fixtures";
 import { users } from "../data/users";
 import { inventoryItems } from "../data/inventory-items";
-import { InventoryPage } from "../pages/InventoryPage";
 
 //perhaps group tests for: hamburger, cart, item details page, sorting
 
@@ -111,4 +110,11 @@ test.describe("Inventory Page Test Suite", () => {
         const expected = [...actual].sort((a, b) => a - b);
         expect(actual).toEqual(expected);
     });
+
+    test("Inventory Detail 'Add to cart' button adds item to cart", async ({ page, inventoryPage, itemDetailsPage }) => {
+        await page.getByTestId(`item-${inventoryItems.backpack.itemId}-title-link`).click();
+        await expect(inventoryPage.shoppingCartBadgeNumber).not.toBeVisible(); //should probs change inventorypage location in terms of the cart since its seen on all pages
+        await itemDetailsPage.addItemToCart(inventoryItems.backpack.name);
+        await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("1");
+    })
 });
