@@ -116,5 +116,7 @@ test.describe("Inventory Page Test Suite", () => {
         await expect(inventoryPage.shoppingCartBadgeNumber).not.toBeVisible(); //should probs change inventorypage location in terms of the cart since its seen on all pages
         await itemDetailsPage.addItemToCart(inventoryItems.backpack.name);
         await expect(inventoryPage.shoppingCartBadgeNumber).toHaveText("1");
-    })
+    });
+
+    //checking the copy of the page seems more of a manual task
 });
