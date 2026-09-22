@@ -8,6 +8,8 @@ export class ItemDetailsPage extends BasePage {
     readonly itemDescription: Locator;
     readonly itemPrice: Locator;
     readonly addToCart: Locator;
+    readonly checkoutButton: Locator;
+    readonly continueShopping: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -17,5 +19,7 @@ export class ItemDetailsPage extends BasePage {
         this.itemDescription = page.getByTestId("inventory-item-desc");
         this.itemPrice = page.getByTestId("inventory-item-price");
         this.addToCart = page.getByRole("button", { name: "Add to cart" }) //page.getByTestId("add-to-cart");
+        this.checkoutButton = page.getByRole("button", {name: "Checkout"});
+        this.continueShopping = page.getByRole("button", {name: "Continue Shopping"});
     }
 };
