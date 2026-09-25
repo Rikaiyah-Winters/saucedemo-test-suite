@@ -39,4 +39,8 @@ test.describe("Cart flow tests", () => {
         await expect(page.getByTestId("inventory-item")).toHaveCount(6)
     })
 
+    //checkout step one
+    //First Name, Last name, and postal code must be filled before user can continue
+
+    test("First Name must be filled before user can continue", async ({page}) => {});
 });
