@@ -44,4 +44,5 @@ test.describe("Cart flow tests", () => {
 
     test("First Name must be filled before user can continue", async ({page}) => {});
     test("Last Name must be filled before user can continue", async ({page}) => {});
+    test("Zip Code must be filled before user can continue", async ({page}) => {});
 });
