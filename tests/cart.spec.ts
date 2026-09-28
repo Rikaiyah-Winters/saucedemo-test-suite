@@ -85,4 +85,11 @@ test.describe("Cart flow tests", () => {
         await expect(page).toHaveURL(/cart\.html/);
         await expect(page.getByTestId("title")).toHaveText("Your Cart");
     });
+
+    //Checkout step two tests
+
+    test("Overview has correct items", async({page}) => {});
+    test("Item total, Tax, and Total are correct", async ({page}) => {});
+    test("Cancel button leads to inventory page", async ({page}) => {});
+    test("Finish button leads to Checkout Complete page", async ({page}) => {});
 });
