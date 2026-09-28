@@ -27,13 +27,13 @@ test.describe("Cart flow tests", () => {
         await expect(inventoryPage.shoppingCartBadgeNumber).not.toBeVisible();
     });
 
-    test("Checkout Shopping button works", async ({page, itemDetailsPage}) => {
+    test("Checkout Shopping button works", async ({ page, itemDetailsPage }) => {
         await itemDetailsPage.checkoutButton.click();
         await expect(page).toHaveURL(/checkout-step-one/)
         await expect(page.getByTestId("title")).toHaveText("Checkout: Your Information")
     })
 
-    test("Continue shopping button goes back to inventory page", async ({page, itemDetailsPage}) => {
+    test("Continue shopping button goes back to inventory page", async ({ page, itemDetailsPage }) => {
         await itemDetailsPage.continueShopping.click();
         await expect(page).toHaveURL(/inventory/);
         await expect(page.getByTestId("inventory-item")).toHaveCount(6)
@@ -42,7 +42,47 @@ test.describe("Cart flow tests", () => {
     //checkout step one
     //First Name, Last name, and postal code must be filled before user can continue
 
-    test("First Name must be filled before user can continue", async ({page}) => {});
-    test("Last Name must be filled before user can continue", async ({page}) => {});
-    test("Zip Code must be filled before user can continue", async ({page}) => {});
+    test("First Name must be filled before user can continue", async ({ page }) => {
+        await page.getByTestId("checkout").click()
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
+        //refer to how the login page handled errors;
+        await expect(page.getByTestId("error")).toHaveText(/First Name is required/);
+    });
+    //should probably make a loop to simplify these 3 tests
+    test("Last Name must be filled before user can continue", async ({ page }) => {
+        await page.getByTestId("checkout").click()
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
+        //refer to how the login page handled errors;
+        await expect(page.getByTestId("error")).toHaveText(/Last Name is required/);
+    });
+    test("Zip Code must be filled before user can continue", async ({ page }) => {
+        await page.getByTestId("checkout").click()
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByTestId("continue").click();
+        //refer to how the login page handled errors;
+        await expect(page.getByTestId("error")).toHaveText(/Postal Code is required/);
+    });
+
+    test("Checkout Step One 'Continue' button works", async ({ page }) => {
+        await page.getByTestId("checkout").click();
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
+
+        await expect(page).toHaveURL(/checkout-step-two/);
+        await expect(page.getByTestId("title")).toHaveText("Checkout: Overview");
+    })
+
+    test("Checkout Step One 'Cancel' button works", async ({page}) => {
+        await page.getByTestId("checkout").click();
+        await page.getByTestId("cancel").click();
+        await expect(page).toHaveURL(/cart\.html/);
+        await expect(page.getByTestId("title")).toHaveText("Your Cart");
+    });
 });

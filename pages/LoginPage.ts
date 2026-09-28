@@ -28,7 +28,7 @@ export class LoginPage {
         await this.loginButton.click();
     }
 
-    async getErrorMessage(): Promise<string> {
+    /*async getErrorMessage(): Promise<string> {
         return (await this.errorMessageContainer.textContent()) ?? "";
-    };
+    };*/
 }
