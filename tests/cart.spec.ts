@@ -88,7 +88,12 @@ test.describe("Cart flow tests", () => {
 
     //Checkout step two tests
 
-    test("Overview has correct items", async({page}) => {});
+    test("Overview has correct items", async({page}) => {
+        //cart has correct # of items
+        //cart has correct names of items
+        //'cancel' button goes back to inventory page
+        //'finish' button goes to final checkout page
+    });
     test("Item total, Tax, and Total are correct", async ({page}) => {});
     test("Cancel button leads to inventory page", async ({page}) => {});
     test("Finish button leads to Checkout Complete page", async ({page}) => {});
