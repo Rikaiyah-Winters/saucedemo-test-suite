@@ -4,6 +4,7 @@ import { InventoryPage } from "../pages/InventoryPage";
 import { CheckOutStepOnePage } from "../pages/CheckOutStepOnePage";
 import { ItemDetailsPage } from "../pages/ItemDetailsPage";
 import { CartPage } from "../pages/CartPage";
+import { CheckOutStepTwoPage } from "../pages/CheckOutStepTwoPage";
 
 type PomFixtures = {
     loginPage: LoginPage;
@@ -11,6 +12,7 @@ type PomFixtures = {
     checkoutStepOnePage: CheckOutStepOnePage;
     itemDetailsPage: ItemDetailsPage;
     cartPage: CartPage;
+    checkoutStepTwoPage: CheckOutStepTwoPage;
 };
 
 export const test = base.extend<PomFixtures>({
@@ -37,6 +39,11 @@ export const test = base.extend<PomFixtures>({
     cartPage: async ({page}, use) => {
         const cartPage = new CartPage(page);
         await use(cartPage)
+    },
+
+    checkoutStepTwoPage: async({page}, use) => {
+        const checkoutStepTwoPage = new CheckOutStepTwoPage(page);
+        await use(checkoutStepTwoPage);
     }
 });
 

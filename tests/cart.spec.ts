@@ -79,7 +79,7 @@ test.describe("Cart flow tests", () => {
         await expect(page.getByTestId("title")).toHaveText("Checkout: Overview");
     })
 
-    test("Checkout Step One 'Cancel' button works", async ({page}) => {
+    test("Checkout Step One 'Cancel' button works", async ({ page }) => {
         await page.getByTestId("checkout").click();
         await page.getByTestId("cancel").click();
         await expect(page).toHaveURL(/cart\.html/);
@@ -88,16 +88,31 @@ test.describe("Cart flow tests", () => {
 
     //Checkout step two tests
 
-    test("Overview has correct items", async({page}) => {
-        //cart has correct # of items
-        //cart has correct names of items
-        //'cancel' button goes back to inventory page
-        //'finish' button goes to final checkout page
+    test("Overview has correct items", async ({ page, inventoryPage, checkoutStepTwoPage }) => {
+        await page.getByTestId("continue-shopping").click();
+        await page.getByTestId("inventory-item").filter({ hasText: inventoryItems.onesie.name }).getByRole("button", { name: "Add to cart" }).click();
+        await inventoryPage.shoppingCartIconLink.click();
+        await page.getByTestId("checkout").click();
+
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
+        await page.getByTestId("checkout");
+        //they need to be in order. Try to figure out how they can be matched out of order. object?
+        await expect(page.getByTestId("inventory-item-name")).toHaveText([inventoryItems.bikeLight.name, inventoryItems.onesie.name])//edit this to say like checkoutStep2.getitemcard("bikeLight")
+        await expect(page.getByTestId("inventory-item")).toHaveCount(2);
+
+
+
+        //total tests
+        const cartPrices = checkoutStepTwoPage.strippedItemPrices();
+        
     });
-    test("Item total, Tax, and Total are correct", async ({page}) => {
+    test("Item total, Tax, and Total are correct", async ({ page }) => {
         //capture the price from each item card and translate it into a number
         //add those numbers together and multiply by 0.08 to get grand total
     });
-    test("Cancel button leads to inventory page", async ({page}) => {});
-    test("Finish button leads to Checkout Complete page", async ({page}) => {});
+    test("Cancel button leads to inventory page", async ({ page }) => { });
+    test("Finish button leads to Checkout Complete page", async ({ page }) => { });
 });
