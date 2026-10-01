@@ -94,7 +94,10 @@ test.describe("Cart flow tests", () => {
         //'cancel' button goes back to inventory page
         //'finish' button goes to final checkout page
     });
-    test("Item total, Tax, and Total are correct", async ({page}) => {});
+    test("Item total, Tax, and Total are correct", async ({page}) => {
+        //capture the price from each item card and translate it into a number
+        //add those numbers together and multiply by 0.08 to get grand total
+    });
     test("Cancel button leads to inventory page", async ({page}) => {});
     test("Finish button leads to Checkout Complete page", async ({page}) => {});
 });
