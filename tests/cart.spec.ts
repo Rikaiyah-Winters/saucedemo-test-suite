@@ -108,6 +108,7 @@ test.describe("Cart flow tests", () => {
         //total tests
         const cartPrices = checkoutStepTwoPage.strippedItemPrices();
         
+        //somehow add the two cart prices and compare it to the Item total to the page
     });
     test("Item total, Tax, and Total are correct", async ({ page }) => {
         //capture the price from each item card and translate it into a number
