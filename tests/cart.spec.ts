@@ -114,6 +114,11 @@ test.describe("Cart flow tests", () => {
         //capture the price from each item card and translate it into a number
         //add those numbers together and multiply by 0.08 to get grand total
     });
-    test("Cancel button leads to inventory page", async ({ page }) => { });
+    test("Cancel button leads to inventory page", async ({ page }) => {
+        //all the steps that lead to 2nd checkout page
+        //click 'cancel' button
+        //assure that url has 'inventory.html'
+        //assure that title has 'Products'
+    });
     test("Finish button leads to Checkout Complete page", async ({ page }) => { });
 });
