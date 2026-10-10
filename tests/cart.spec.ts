@@ -117,8 +117,11 @@ test.describe("Cart flow tests", () => {
     test("Cancel button leads to inventory page", async ({ page }) => {
         //all the steps that lead to 2nd checkout page
         //click 'cancel' button
+        await page.getByTestId("cancel").click();
         //assure that url has 'inventory.html'
+        await expect(page).toHaveURL(/inventory\.html/)
         //assure that title has 'Products'
+        await expect(page.getByTestId("title")).toHaveText("Products");
     });
     test("Finish button leads to Checkout Complete page", async ({ page }) => { });
 });
