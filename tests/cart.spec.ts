@@ -126,7 +126,10 @@ test.describe("Cart flow tests", () => {
     test("Finish button leads to Checkout Complete page", async ({ page }) => {
         //all the steps that lead to the 2nd checkout page
         //click the 'Finish' button
+        await page.getByTestId("finish").click();
         //assure that the url has 'checkout-complete.html'
+        await expect(page).toHaveURL(/checkout-complete\.html/)
         //assure that the title is "Checkout: Complete!"
+        await expect(page.getByTestId("title")).toHaveText("Checkout: Complete!");
      });
 });
