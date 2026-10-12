@@ -94,7 +94,7 @@ test.describe("Cart flow tests", () => {
         await inventoryPage.shoppingCartIconLink.click();
         await page.getByTestId("checkout").click();
 
-        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("First Name").fill("Jane"); //this needs to be its own method
         await page.getByPlaceholder("Last Name").fill("Doe");
         await page.getByPlaceholder("Zip/Postal Code").fill("90210");
         await page.getByTestId("continue").click();
@@ -102,20 +102,22 @@ test.describe("Cart flow tests", () => {
         //they need to be in order. Try to figure out how they can be matched out of order. object?
         await expect(page.getByTestId("inventory-item-name")).toHaveText([inventoryItems.bikeLight.name, inventoryItems.onesie.name])//edit this to say like checkoutStep2.getitemcard("bikeLight")
         await expect(page.getByTestId("inventory-item")).toHaveCount(2);
-
-
-
         //total tests
-        const cartPrices = checkoutStepTwoPage.strippedItemPrices();
-        
+        //const cartPrices = checkoutStepTwoPage.strippedItemPrices();   
         //somehow add the two cart prices and compare it to the Item total to the page
     });
-    test("Item total, Tax, and Total are correct", async ({ page }) => {
+    /*test("Item total, Tax, and Total are correct", async ({ page }) => {
         //capture the price from each item card and translate it into a number
         //add those numbers together and multiply by 0.08 to get grand total
-    });
-    test("Cancel button leads to inventory page", async ({ page }) => {
+    });*/
+    test("Cancel button leads to inventory page (checkout step two)", async ({ page }) => {
         //all the steps that lead to 2nd checkout page
+        await page.getByTestId("checkout").click();
+        //on information page (checkout step one)
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
         //click 'cancel' button
         await page.getByTestId("cancel").click();
         //assure that url has 'inventory.html'
@@ -125,11 +127,21 @@ test.describe("Cart flow tests", () => {
     });
     test("Finish button leads to Checkout Complete page", async ({ page }) => {
         //all the steps that lead to the 2nd checkout page
+        await page.getByTestId("checkout").click();
+        //on information page (checkout step one)
+        await page.getByPlaceholder("First Name").fill("Jane");
+        await page.getByPlaceholder("Last Name").fill("Doe");
+        await page.getByPlaceholder("Zip/Postal Code").fill("90210");
+        await page.getByTestId("continue").click();
         //click the 'Finish' button
         await page.getByTestId("finish").click();
         //assure that the url has 'checkout-complete.html'
         await expect(page).toHaveURL(/checkout-complete\.html/)
         //assure that the title is "Checkout: Complete!"
         await expect(page.getByTestId("title")).toHaveText("Checkout: Complete!");
-     });
+        await page.getByTestId("back-to-products").click();
+        await expect(page).toHaveURL(/inventory\.html/)
+    });
+
+    //ADVANCED: Figure out how to test the PDF Order
 });
