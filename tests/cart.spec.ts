@@ -40,7 +40,6 @@ test.describe("Cart flow tests", () => {
     })
 
     //checkout step one
-    //First Name, Last name, and postal code must be filled before user can continue
 
     test("Checkout: Your Information Page - First Name must be filled before user can continue", async ({ page }) => {
         await page.getByTestId("checkout").click()
